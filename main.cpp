@@ -1,63 +1,105 @@
 #include <iostream>
-#include <conio.h>
-#include <sstream>
-
+#include <stdlib.h>
+#include <stdio.h>
 
 using namespace std;
 
-bool validaN(string entrada){
-	bool valida= true;
-	int tam = entrada.size();
-	for(int i=0;i<tam;i++){
-		if( entrada[i] < 46 || entrada[i] > 57 ){
-                valida = false;
-                break;
-		} // limita el rango de entrada desde . a 9
-		if( entrada[i] == 47){
-			        valida = false;
-			        break;
-                }//excluye al slash de la lista limitada
-	}//itera para validar cada caracter ingresado
-	return valida;
-}; //funcion que retorna el valor de valida como verdadero o falso
+float total=0.0;
+int men=0, may=0;
 
+void menu(){
 
+    system("CLS");
+    cout<< "\tMENU\n1.Ingreso de datos del trabajador\n2.Calculo de porcentaje\n3.Calculo de pago total\n4.Salir";
 
+}//menu
 
-int main() {
+float validarsueldos(float plata){
 
-	string num1;
-	cout<< "Ingrese un numero: \n";
-	cin>> num1;
+	while(plata<1000 || plata>2000){
 
-	while(!validaN(num1)){
-		cout<< "Oe no seas gil te dije numero ctmr \n";
-		cin.clear();
+		cout << "ingrese sueldo en el rango asignado   :";
 		cin.ignore();
-		cout<< "Ingrese un numero: \n";
-		cin>> num1;
-	}
-	string num2;
-	cout<< "Ingrese un numero: \n";
-	cin>> num2;
-
-	while(!validaN(num2)){
-		cout<< "Oe no seas gil te dije numero ctmr \n";
 		cin.clear();
-		cin.ignore();
-		cout<< "Ingrese un numero: \n";
-		cin>> num2;
-	}
+		cin >> plata ;
 
-	float numv1= 0.0, numv2= 0.0;
+	}//finmientras
+	if( plata >= 1000 && plata <= 2000 ){
+                total = total + plata;
+                if(plata<1500){
+                    men++;
+                    }//finsi
+                else {
+                    may++;
+                    }//finsino
+    }//finsi
+
+ return plata;
+
+}//validar sueldo
 
 
-	istringstream (num1)>> numv1;
-	istringstream (num2)>> numv2;
+
+int main(){
+    float salario=0.0, por1=0.0, por2=0.0;
+    int n=0;
+    char opc=' ';
+
+  string nombre;
 
 
-	cout<< "La suma es:" << numv1 + numv2 << endl ;
 
-	getch();
-	return 0;
+   do{
+   menu();
+   cout << "\n\nSeleccione opcion ---->";
+   cin>>opc;
+   switch (opc){
+       case '1':
+       		system("CLS");
+           cout << "Ingrese numero de Trabajadores ---> ";
+           cin >> n ;
+           for (int i=0; i<n ; i++){
+                cout<<"Ingrese el nombre: \n";
+                cin >> nombre;
+
+                cout << "ingrese el sueldo (1000-2000 s/.): \n";
+                cin >> salario;
+                validarsueldos(salario);
+                fflush(stdin);
+
+
+                cout << endl;
+
+
+                }//fin for
+                system ("PAUSE");
+           break;
+       case '2':
+       		system("CLS");
+            por1= (men*100)/6;
+            por2= 100-por1;
+
+            cout<< "El procentaje de menor sueldo es: " << por1 << "% \n"
+                << "El porcentaje de mayor sueldo es: " << por2 << "% \n" ;
+                system ("PAUSE");
+
+
+           break;
+       case '3':
+       		system("CLS");
+        	cout << "El sueldo total a pagar es: " << total << endl << endl;
+        	system ("PAUSE");
+            break;
+       case '4':
+            break;
+       default:
+        cout << "ErrorOpcion"
+        ;
+
+
+   }//finswitch
+}while(opc != '4');//fin do
+
+   return 0;
 }
+
